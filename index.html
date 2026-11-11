@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#174a45">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23f04e50'/%3E%3Cpath fill='%23f5eee0' d='M2 16h28a14 14 0 0 1-28 0'/%3E%3Cpath fill='%23282c37' d='M2 15h28v3H2z'/%3E%3C/svg%3E">
+  <title>Voltorb's Berry Run — Kanto Route 03</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+    :root{--ink:#173b39;--cream:#fff4d7;--pink:#ef7892;--gold:#ffcf61;--green:#73b96b;--panel:#f8e9be;--dark:#133b38}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#c9e6c6;color:var(--ink)}
+    body{font-family:'VT323',monospace;background:radial-gradient(ellipse at 50% 5%,#f2f1cf 0,#c6e4c4 48%,#84bd92 100%);}
+    button{font:inherit;color:inherit;cursor:pointer}
+    .page{min-height:100svh;padding:20px 24px 24px;display:flex;align-items:center;justify-content:center}
+    .cabinet{width:min(1120px,100%);border:4px solid #285d56;border-radius:20px;background:#e8d6a5;padding:14px;box-shadow:0 10px 0 #34675b,0 22px 48px #24534355;position:relative}
+    .cabinet:before{content:"";position:absolute;inset:5px;border:2px solid #fff4d777;border-radius:12px;pointer-events:none}
+    .topline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 6px 12px}
+    .brand{font-family:'Press Start 2P',monospace;font-size:clamp(10px,1.3vw,15px);line-height:1.75;color:#27574d;text-shadow:1px 2px #fff3cf;white-space:nowrap}
+    .brand small{display:block;font:20px 'VT323',monospace;letter-spacing:2px;color:#687b52;text-shadow:none;white-space:nowrap}
+    .badge{font:11px 'Press Start 2P',monospace;color:#fff4dc;background:#327065;border:2px solid #fff1c8;border-radius:20px;padding:9px 12px;white-space:nowrap;box-shadow:0 3px #1f504b}
+    .game-layout{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:14px;align-items:stretch}
+    .screen-frame{padding:9px;background:#183f3b;border:4px solid #3b7165;border-radius:12px;box-shadow:inset 0 0 0 2px #0f302f;position:relative;overflow:hidden}
+    canvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:4px;touch-action:none;background:#79b873}
+    .sidebar{display:flex;flex-direction:column;gap:10px}
+    .card{background:var(--panel);border:3px solid #fff0c7;border-radius:10px;padding:12px;box-shadow:0 4px 0 #c6ad76}
+    .label{font:9px 'Press Start 2P',monospace;color:#66805a;letter-spacing:.3px;margin-bottom:8px}
+    .score{font:32px 'VT323',monospace;color:#24534c;line-height:1}
+    .hearts{font-size:24px;letter-spacing:2px;color:#e75f76;white-space:nowrap}
+    .hearts .lost{opacity:.22;filter:grayscale(1)}
+    .items{display:flex;align-items:center;gap:8px;font-size:21px;color:#345a4b}.candy-icon{color:#e77b9b;text-shadow:1px 1px #fff}.berry-icon{color:#c84a76}
+    .legend{font-size:18px;line-height:1.03;color:#54715b}.legend div{margin:5px 0}
+    .help{margin-top:auto;font-size:18px;color:#56705a;line-height:1.05}
+    .key{display:inline-block;border:2px solid #bba97b;background:#fff3d4;border-radius:4px;min-width:24px;text-align:center;padding:1px 4px;color:#34564c}
+    .mobile-controls{display:none;justify-content:center;align-items:center;gap:7px;padding-top:10px;touch-action:none}
+    .pad{display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,42px);gap:4px;grid-template-areas:". up ." "left down right"}
+    .pad button{border:2px solid #fff2ca;border-radius:8px;background:#3d7969;color:#fff5d5;font-size:22px;box-shadow:0 3px #25584f;touch-action:none;user-select:none;-webkit-user-select:none}
+    .pad button:active{transform:translateY(2px);box-shadow:0 1px #25584f}.pad .up{grid-area:up}.pad .left{grid-area:left}.pad .down{grid-area:down}.pad .right{grid-area:right}
+    .bottomline{display:flex;justify-content:space-between;align-items:center;padding:12px 6px 1px;color:#627554;font-size:19px;gap:10px}
+    .bottomline strong{color:#38675a}.sound{border:0;background:transparent;font-size:20px;color:#39675b;padding:4px 8px}
+    .overlay{position:absolute;inset:9px;display:flex;align-items:center;justify-content:center;background:#143d38c9;z-index:2;border-radius:5px;text-align:center;padding:18px}
+    .dialog{max-width:440px;padding:24px 22px;background:#f8e9bd;border:4px solid #fff2ca;border-radius:12px;box-shadow:0 7px 0 #bd9f69;color:#31584e}
+    .dialog h1{font:clamp(15px,2.4vw,25px)/1.6 'Press Start 2P',monospace;color:#d64e74;margin:2px 0 12px;text-shadow:2px 2px #f4c864}
+    .dialog p{font-size:24px;line-height:1.05;margin:10px 0 18px}.dialog .tiny{font-size:19px;color:#72815b}
+    .play{font:12px 'Press Start 2P',monospace;border:0;border-radius:6px;padding:15px 19px;background:#e86481;color:white;box-shadow:0 5px #ad3e63;text-shadow:1px 1px #a64460;margin-top:3px}
+    .play:active{transform:translateY(3px);box-shadow:0 2px #ad3e63}
+    .voltorb-art{font-size:57px;line-height:1;margin:7px 0 11px;filter:drop-shadow(3px 4px #aa466255)}
+    .toast{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:1;background:#fff0c8;border:2px solid #fff;border-radius:20px;padding:6px 14px;color:#a94f66;font-size:21px;white-space:nowrap;opacity:0;transition:opacity .15s;pointer-events:none}
+    .toast.show{opacity:1}
+    @media(max-width:760px){.page{padding:10px 9px 14px;align-items:flex-start}.cabinet{padding:9px;border-width:3px;border-radius:14px}.topline{padding-bottom:8px}.game-layout{grid-template-columns:minmax(0,1fr) 150px;gap:8px}.sidebar{gap:7px}.card{padding:9px;border-width:2px}.label{font-size:8px}.score{font-size:26px}.hearts{font-size:20px}.legend{font-size:16px}.help{font-size:16px}.screen-frame{padding:5px;border-width:3px}.badge{font-size:8px;padding:7px 8px}.mobile-controls{display:flex}.bottomline{padding-top:8px;font-size:16px}}
+    @media(max-width:540px){.page{padding:6px 5px 10px}.cabinet{padding:7px}.topline{gap:4px}.brand{font-size:clamp(7px,2.1vw,9px);letter-spacing:-.3px}.brand small{font-size:clamp(12px,4vw,17px);letter-spacing:1px}.badge{font-size:clamp(6px,1.8vw,7px);padding:6px 6px}.game-layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.card{padding:6px 7px}.label{font-size:7px;margin-bottom:5px}.score{font-size:23px}.hearts{font-size:16px;letter-spacing:0}.items{font-size:16px;gap:3px}.legend{display:none}.help{display:none}.screen-frame{padding:4px}.mobile-controls{padding-top:8px}.pad{grid-template-columns:repeat(3,46px);grid-template-rows:repeat(2,37px)}.bottomline{font-size:15px}.dialog{padding:18px 15px}.dialog p{font-size:21px}}
+    @media(max-height:650px) and (min-width:541px){.page{padding-top:6px;padding-bottom:8px}.cabinet{padding:8px}.topline{padding-bottom:5px}.bottomline{padding-top:6px}.card{padding:8px}.sidebar{gap:7px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="cabinet" aria-label="Voltorb's Berry Run arcade game">
+      <header class="topline"><div class="brand">VOLTORB'S BERRY RUN<small>KANTO ROUTE 03 · 16-BIT EDITION</small></div><div class="badge">★ TRAINER CHALLENGE</div></header>
+      <div class="game-layout">
+        <div class="screen-frame">
+          <canvas id="game" aria-label="Game maze. Use arrow keys or WASD to move Voltorb."></canvas>
+          <div class="toast" id="toast">Rare Candy! +10</div>
+          <div class="overlay" id="overlay">
+            <div class="dialog" id="dialog">
+              <div class="voltorb-art">🔴</div>
+              <h1>Berry Run!</h1>
+              <p>Help Voltorb collect every Rare Candy on Route 03!</p>
+              <p class="tiny">Grab a Berry to turn the tables on Gastly.<br>Arrow keys / WASD or the touch pad.</p>
+              <button class="play" id="play">START GAME</button>
+            </div>
+          </div>
+        </div>
+        <aside class="sidebar" aria-label="Game status">
+          <section class="card"><div class="label">SCORE</div><div class="score" id="score">000000</div></section>
+          <section class="card"><div class="label">BEST RUN</div><div class="score" id="best">000000</div></section>
+          <section class="card"><div class="label">LIVES</div><div class="hearts" id="lives">♥ ♥ ♥</div></section>
+          <section class="card"><div class="label">ROUTE TREATS</div><div class="items"><span class="candy-icon">✦</span><span id="candyCount">0 / 0</span><span class="berry-icon">●</span><span id="berryCount">0</span></div></section>
+          <section class="card legend"><div class="label">FIELD GUIDE</div><div>✦ <strong>Rare Candy</strong> <small>+10 pts</small></div><div>● <strong>Berry</strong> <small>+50 pts</small></div><div>👻 <strong>Gastly</strong> <small>catch while scared</small></div></section>
+          <div class="help">MOVE <span class="key">↑</span><span class="key">←</span><span class="key">↓</span><span class="key">→</span><br>or <span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span><br><span style="font-size:15px">P to pause · swipe on screen</span></div>
+        </aside>
+      </div>
+      <nav class="mobile-controls" aria-label="Touch direction controls"><div class="pad"><button class="up" data-dir="up" aria-label="Up">▲</button><button class="left" data-dir="left" aria-label="Left">◀</button><button class="down" data-dir="down" aria-label="Down">▼</button><button class="right" data-dir="right" aria-label="Right">▶</button></div></nav>
+      <footer class="bottomline"><span><strong>PALLET TOWN</strong> → VIRIDIAN CITY</span><button class="sound" id="sound" aria-label="Toggle sound">♫ SOUND: ON</button><span>© KANTO FIELD CLUB</span></footer>
+    </section>
+  </main>
+<script>
+  // Kanto route maze: the carved lanes form a connected grid of winding paths.
+  const COLS = 23, ROWS = 21, TILE = 30;
+  const laneRows = new Set([1, 5, 9, 13, 17, 19]);
+  const laneCols = new Set([1, 5, 9, 13, 17, 21]);
+  const map = Array.from({length: ROWS}, (_, y) => Array.from({length: COLS}, (_, x) =>
+    (laneRows.has(y) || laneCols.has(x)) && x > 0 && x < COLS - 1 && y > 0 && y < ROWS - 1 ? 0 : 1));
+  // Short jogs and alcoves make the route feel less like a grid, while leaving every lane connected.
+  [[3,1],[7,1],[15,1],[19,1],[3,5],[7,5],[15,5],[19,5],[3,9],[7,9],[15,9],[19,9],
+   [3,13],[7,13],[15,13],[19,13],[3,17],[7,17],[15,17],[19,17]].forEach(([x,y])=>{ map[y][x]=0; });
+  const canvas = document.getElementById('game'), ctx = canvas.getContext('2d');
+  canvas.width = COLS * TILE; canvas.height = ROWS * TILE;
+  ctx.imageSmoothingEnabled = false;
+  const $ = id => document.getElementById(id);
+  const overlay = $('overlay'), dialog = $('dialog');
+  const DIRS = {up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
+  const DIR_NAMES = Object.keys(DIRS);
+  const berriesAt = [[1,1],[21,1],[1,19],[21,19]];
+  const startPlayer = {x:11,y:19};
+  const startGhosts = [
+    {x:9,y:9,color:'#e985dd',name:'Puff'}, {x:13,y:9,color:'#80d9ec',name:'Misty'},
+    {x:9,y:13,color:'#f0a15e',name:'Ember'}, {x:13,y:13,color:'#98d987',name:'Leaf'}
+  ];
+  const totalCandies = map.flat().filter(cell=>cell===0).length - berriesAt.length - 1;
+  let candies = new Set(), berries = new Set(), player, ghosts, score=0, lives=3, best=Number(localStorage.getItem('berryRunBest')||0);
+  let phase='scatter', frightened=0, gameState='ready', paused=false, remaining=0, elapsed=0, tick=0;
+  let desired='left', move='left', ghostClock=0, playerClock=0, toastClock=0, lastTime=0, soundOn=true, audio=null, safety=0;
+  const keyOf=(x,y)=>`${x},${y}`;
+  const canGo=(x,y)=>x>=0&&x<COLS&&y>=0&&y<ROWS&&map[y][x]===0;
+  function freshBoard(){
+    candies=new Set(); berries=new Set(berriesAt.map(([x,y])=>keyOf(x,y)));
+    map.forEach((row,y)=>row.forEach((cell,x)=>{if(!cell&&!berries.has(keyOf(x,y))&&!(x===startPlayer.x&&y===startPlayer.y))candies.add(keyOf(x,y));}));
+    remaining=candies.size+berries.size;
+    player={...startPlayer,dir:'left'};
+    ghosts=startGhosts.map((g,i)=>({...g,spawn:{x:g.x,y:g.y},dir:i%2?'down':'up',eaten:false,step:i*40}));
+    frightened=0;phase='scatter';move='left';desired='left';playerClock=0;ghostClock=0;updateHud();
+  }
+  function updateHud(){
+    $('score').textContent=String(score).padStart(6,'0'); $('best').textContent=String(best).padStart(6,'0');
+    $('lives').innerHTML=Array.from({length:3},(_,i)=>`<span class="${i>=lives?'lost':''}">♥</span>`).join(' ');
+    const eaten=totalCandies-candies.size; $('candyCount').textContent=`${eaten} / ${totalCandies}`;
+    $('berryCount').textContent=String(4-berries.size);
+  }
+  function addScore(points){score+=points;if(score>best){best=score;localStorage.setItem('berryRunBest',String(best));}updateHud();}
+  function chirp(freq=560,duration=.06){if(!soundOn)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();const osc=audio.createOscillator(),gain=audio.createGain();osc.type='square';osc.frequency.value=freq;gain.gain.setValueAtTime(.035,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+duration);}catch(_){}}
+  function flashToast(text){const el=$('toast');el.textContent=text;el.classList.add('show');toastClock=1.1;}
+  function showOverlay(title,copy,button,small=''){
+    dialog.innerHTML=`<div class="voltorb-art">${title==='ROUTE CLEAR!'?'🏆':'🔴'}</div><h1>${title}</h1><p>${copy}</p>${small?`<p class="tiny">${small}</p>`:''}<button class="play" id="play">${button}</button>`;
+    overlay.style.display='flex';$('play').addEventListener('click',()=>{
+      if(gameState==='ready'||gameState==='over'||gameState==='won') startGame();
+      else if(gameState==='paused'){gameState='playing';overlay.style.display='none';lastTime=performance.now();}
+    });
+  }
+  function startGame(){score=0;lives=3;freshBoard();safety=2.2;gameState='playing';paused=false;overlay.style.display='none';lastTime=performance.now();chirp(660,.1);}
+  function endGame(won){gameState=won?'won':'over';showOverlay(won?'ROUTE CLEAR!':'GAME OVER',won?'You cleared the route and saved every Rare Candy!':`Voltorb ran out of lives. Final score: ${score}.`,won?'PLAY AGAIN':'TRY AGAIN',won?'A true Kanto champion!':'Best run: '+String(best).padStart(6,'0'));}
+  function pauseGame(){if(gameState==='playing'){gameState='paused';showOverlay('PAUSED','Take a breather, Trainer. Your route is waiting.','RESUME','Press P or tap Resume to continue.');}}
+  function requestDir(dir){if(DIRS[dir]&&gameState==='playing')desired=dir;}
+  function stepPlayer(){
+    const want=DIRS[desired], forward=DIRS[move];
+    if(canGo(player.x+want.x,player.y+want.y))move=desired;
+    if(!canGo(player.x+forward.x,player.y+forward.y))return;
+    player.x+=forward.x;player.y+=forward.y;player.dir=move;
+    const at=keyOf(player.x,player.y);
+    if(candies.delete(at)){addScore(10);chirp(660,.045);flashToast('Rare Candy!  +10');}
+    if(berries.delete(at)){addScore(50);frightened=8;addScore(0);chirp(920,.16);flashToast('Berry power! Gastly are scared!');ghosts.forEach(g=>{g.eaten=false;});}
+    remaining=candies.size+berries.size;
+    if(remaining===0){updateHud();endGame(true);return;}
+    collide();
+  }
+  function ghostMode(){if(frightened>0)return 'frightened';return (Math.floor(elapsed/7)%2===0)?'scatter':'chase';}
+  function targetFor(g,index,mode){
+    if(mode==='scatter'){const corners=[[1,1],[21,1],[1,19],[21,19]];return corners[index];}
+    if(index===0)return {x:player.x,y:player.y};
+    if(index===1){const d=DIRS[player.dir]||DIRS.left;return {x:player.x+d.x*3,y:player.y+d.y*3};}
+    if(index===2){return Math.abs(g.x-player.x)+Math.abs(g.y-player.y)>6?{x:player.x,y:player.y}:{x:1,y:19};}
+    // The fourth Gastly aims ahead of Voltorb, but wanders when very close.
+    const d=DIRS[player.dir]||DIRS.left;return {x:player.x+d.x*2,y:player.y+d.y*2};
+  }
+  function stepGhost(g,index){
+    if(g.eaten){if(g.x===g.spawn.x&&g.y===g.spawn.y){g.eaten=false;return;}const back=DIR_NAMES.map(n=>({name:n,d:DIRS[n],x:g.x+DIRS[n].x,y:g.y+DIRS[n].y})).filter(v=>canGo(v.x,v.y)).sort((a,b)=>(Math.abs(a.x-g.spawn.x)+Math.abs(a.y-g.spawn.y))-(Math.abs(b.x-g.spawn.x)+Math.abs(b.y-g.spawn.y)));if(back[0]){g.x=back[0].x;g.y=back[0].y;}return;}
+    const mode=ghostMode(), reverse={up:'down',down:'up',left:'right',right:'left'}[g.dir];
+    let choices=DIR_NAMES.map(name=>({name,d:DIRS[name],x:g.x+DIRS[name].x,y:g.y+DIRS[name].y})).filter(v=>canGo(v.x,v.y));
+    if(choices.length>1)choices=choices.filter(v=>v.name!==reverse);
+    if(!choices.length)return;
+    if(mode==='frightened'){
+      choices.sort((a,b)=>{const da=(a.x-player.x)**2+(a.y-player.y)**2,db=(b.x-player.x)**2+(b.y-player.y)**2;return db-da+(Math.random()-.5)*5;});
+      if(Math.random()<.28)g.dir=choices[Math.floor(Math.random()*choices.length)].name;else g.dir=choices[0].name;
+    }else{
+      const target=targetFor(g,index,mode);
+      // Gastly make occasional imperfect turns, keeping the chase playful and unpredictable.
+      if(Math.random()<.12)g.dir=choices[Math.floor(Math.random()*choices.length)].name;
+      else{choices.sort((a,b)=>((a.x-target.x)**2+(a.y-target.y)**2)-((b.x-target.x)**2+(b.y-target.y)**2));g.dir=choices[0].name;}
+    }
+    const d=DIRS[g.dir];g.x+=d.x;g.y+=d.y;
+  }
+  function collide(){for(const g of ghosts){if(g.eaten||g.x!==player.x||g.y!==player.y)continue;if(frightened>0){g.eaten=true;addScore(200);chirp(300,.15);flashToast('Gastly caught!  +200');}else if(safety<=0){loseLife();return;}}}
+  function loseLife(){lives--;chirp(180,.2);updateHud();if(lives<=0){endGame(false);return;}player={...startPlayer,dir:'left'};move='left';desired='left';safety=2.2;ghosts=startGhosts.map((g,i)=>({...g,spawn:{x:g.x,y:g.y},dir:i%2?'down':'up',eaten:false,step:i*40}));frightened=0;flashToast('Ouch! Watch out for Gastly!');}
+  function simulate(dt){if(gameState!=='playing')return;elapsed+=dt;if(safety>0)safety=Math.max(0,safety-dt);if(frightened>0)frightened=Math.max(0,frightened-dt);playerClock+=dt;ghostClock+=dt;
+    if(playerClock>=.125){playerClock-=.125;stepPlayer();}
+    if(ghostClock>=.21){ghostClock-=.21;ghosts.forEach((g,i)=>stepGhost(g,i));collide();}
+    if(toastClock>0){toastClock-=dt;if(toastClock<=0)$('toast').classList.remove('show');}
+  }
+  function hash(x,y){let n=(x*374761393+y*668265263)|0;n=(n^(n>>>13))*1274126177;return ((n^(n>>>16))>>>0)/4294967295;}
+  function drawTile(x,y){const px=x*TILE,py=y*TILE;
+    if(map[y][x]){
+      ctx.fillStyle=hash(x,y)>.5?'#5c9d59':'#68a961';ctx.fillRect(px,py,TILE,TILE);
+      if((x===0||y===0||x===COLS-1||y===ROWS-1)||hash(x,y)>.34){
+        ctx.fillStyle='#38784d';ctx.fillRect(px+3,py+5,23,19);ctx.fillStyle='#4b8c50';ctx.fillRect(px+1,py+10,27,13);ctx.fillStyle='#2e6948';ctx.fillRect(px+5,py+21,19,4);
+        ctx.fillStyle='#83bd65';ctx.fillRect(px+7,py+7,6,3);ctx.fillRect(px+17,py+11,5,3);ctx.fillStyle='#a1cc75';ctx.fillRect(px+10,py+8,3,2);
+      }else{ctx.fillStyle='#76b86b';ctx.fillRect(px+4,py+6,3,3);ctx.fillRect(px+22,py+20,2,2);}
+    }else{
+      ctx.fillStyle='#c69c61';ctx.fillRect(px,py,TILE,TILE);
+      ctx.fillStyle='#d9b578';ctx.fillRect(px+1,py+1,28,28);
+      ctx.fillStyle='#c9a36b';ctx.fillRect(px+2,py+2,13,12);ctx.fillRect(px+16,py+16,13,12);
+      ctx.fillStyle='#e2c48a';ctx.fillRect(px+16,py+2,13,12);ctx.fillRect(px+2,py+16,13,12);
+      ctx.fillStyle='#b88d55';ctx.fillRect(px+14,py+2,2,12);ctx.fillRect(px+2,py+14,12,2);ctx.fillRect(px+16,py+14,12,2);ctx.fillRect(px+14,py+16,2,12);
+      if(hash(x,y)>.4){ctx.fillStyle='#758f4f';ctx.fillRect(px+5+Math.floor(hash(y,x)*14),py+7,2,2);}
+    }
+  }
+  function drawCandy(x,y){const cx=x*TILE+15,cy=y*TILE+15;ctx.save();ctx.translate(cx,cy);ctx.rotate(Math.PI/4);
+    ctx.fillStyle='#fff0bb';ctx.fillRect(-6,-6,12,12);ctx.fillStyle='#f17b9a';ctx.fillRect(-4,-7,8,14);ctx.fillStyle='#ffd064';ctx.fillRect(-2,-5,4,10);
+    ctx.fillStyle='#fff4c9';ctx.fillRect(-2,-3,2,3);ctx.restore();ctx.fillStyle='#ffe8a6';ctx.fillRect(cx-10,cy-2,3,2);ctx.fillRect(cx+7,cy+2,3,2);
+  }
+  function drawBerry(x,y){const cx=x*TILE+15,cy=y*TILE+16;ctx.fillStyle='#ad446b';ctx.fillRect(cx-6,cy-5,12,12);ctx.fillStyle='#d84f75';ctx.fillRect(cx-8,cy-2,16,8);ctx.fillStyle='#ec7183';ctx.fillRect(cx-5,cy-6,8,7);ctx.fillStyle='#f8b07c';ctx.fillRect(cx-4,cy-4,3,3);
+    ctx.fillStyle='#397a50';ctx.fillRect(cx-1,cy-9,3,5);ctx.fillRect(cx+2,cy-10,6,3);ctx.fillRect(cx-5,cy-11,5,3);
+  }
+  function drawVoltorb(x,y,dir,frame){if(safety>0&&Math.floor(frame*10)%2===0)return;const cx=x*TILE+15,cy=y*TILE+15+Math.sin(frame*9)*1.1,r=11;
+    ctx.save();ctx.translate(cx,cy);ctx.fillStyle='#382f36';ctx.beginPath();ctx.ellipse(0,12,9,2.7,0,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.clip();ctx.fillStyle='#f04e50';ctx.fillRect(-r,-r,2*r,r);ctx.fillStyle='#f5eee0';ctx.fillRect(-r,0,2*r,r);ctx.fillStyle='#282c37';ctx.fillRect(-r,-1,2*r,3);ctx.restore();
+    const offset=dir==='left'?-1.5:dir==='right'?1.5:0;
+    ctx.fillStyle='#242737';ctx.fillRect(cx-5+offset,cy-3,3,4);ctx.fillRect(cx+3+offset,cy-3,3,4);ctx.fillStyle='#fff';ctx.fillRect(cx-5+offset,cy-3,1,1);ctx.fillRect(cx+3+offset,cy-3,1,1);
+    ctx.fillStyle='#fff';ctx.fillRect(cx-8,cy-7,4,2);ctx.fillRect(cx-6,cy-9,3,2);
+  }
+  function drawGastly(g,frame){const cx=g.x*TILE+15,cy=g.y*TILE+15+Math.sin(frame*7+g.step)*1.4;const scared=frightened>0&&!g.eaten;
+    if(g.eaten){ctx.fillStyle='#fff';ctx.fillRect(cx-8,cy-3,5,5);ctx.fillRect(cx+3,cy-3,5,5);ctx.fillStyle='#1f2c46';ctx.fillRect(cx-6,cy-1,2,2);ctx.fillRect(cx+5,cy-1,2,2);return;}
+    ctx.fillStyle=scared?'#6488dd':'#592767';ctx.beginPath();ctx.arc(cx,cy,12,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=scared?'#8fb4ff':'#7f388f';ctx.beginPath();ctx.moveTo(cx-10,cy+5);ctx.lineTo(cx-13,cy+11);ctx.lineTo(cx-6,cy+9);ctx.lineTo(cx-2,cy+13);ctx.lineTo(cx+2,cy+9);ctx.lineTo(cx+8,cy+12);ctx.lineTo(cx+8,cy+6);ctx.closePath();ctx.fill();
+    if(scared){ctx.fillStyle='#dceaff';ctx.fillRect(cx-6,cy-2,4,4);ctx.fillRect(cx+3,cy-2,4,4);ctx.fillStyle='#425c9b';ctx.fillRect(cx-5,cy-1,2,2);ctx.fillRect(cx+4,cy-1,2,2);ctx.fillStyle='#fff';ctx.fillRect(cx-2,cy+5,4,2);}
+    else{ctx.fillStyle='#fff';ctx.fillRect(cx-7,cy-3,6,7);ctx.fillRect(cx+2,cy-3,6,7);ctx.fillStyle='#25213a';ctx.fillRect(cx-4,cy-1,3,4);ctx.fillRect(cx+4,cy-1,3,4);ctx.fillStyle='#ffc6d1';ctx.fillRect(cx-3,cy+7,7,2);}
+    ctx.fillStyle='#a868b4';ctx.fillRect(cx-7,cy-9,3,2);
+  }
+  function drawScene(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#69a960';ctx.fillRect(0,0,canvas.width,canvas.height);
+    for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)drawTile(x,y);
+    // Route signposts and a healing-station landmark decorate the overworld without blocking lanes.
+    ctx.fillStyle='#72503c';ctx.fillRect(10*TILE+13,3*TILE+7,4,14);ctx.fillStyle='#e8ca76';ctx.fillRect(10*TILE+7,3*TILE+4,16,8);ctx.fillStyle='#42634c';ctx.fillRect(10*TILE+9,3*TILE+6,12,2);
+    candies.forEach(k=>{const [x,y]=k.split(',').map(Number);drawCandy(x,y);});berries.forEach(k=>{const [x,y]=k.split(',').map(Number);drawBerry(x,y);});
+    ghosts.forEach(g=>drawGastly(g,tick));drawVoltorb(player.x,player.y,player.dir,tick);
+    if(frightened>0){ctx.fillStyle='#ffffff';ctx.font='10px monospace';ctx.textAlign='right';ctx.fillText(`${Math.ceil(frightened)}s`,canvas.width-7,14);}
+  }
+  function frame(now){const dt=Math.min(.05,Math.max(0,(now-lastTime)/1000||0));lastTime=now;tick+=dt;simulate(dt);drawScene();requestAnimationFrame(frame);}
+  document.addEventListener('keydown',e=>{
+    const k=e.key.toLowerCase(),dirs={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'};
+    if(dirs[k]){e.preventDefault();requestDir(dirs[k]);}
+    if(k==='p'||k==='escape'){e.preventDefault();if(gameState==='playing')pauseGame();else if(gameState==='paused'){gameState='playing';overlay.style.display='none';lastTime=performance.now();}}
+    if((k==='enter'||k===' ')&&(gameState==='ready'||gameState==='over'||gameState==='won')){e.preventDefault();startGame();}
+  });
+  document.querySelectorAll('[data-dir]').forEach(button=>{
+    const point=e=>{e.preventDefault();requestDir(button.dataset.dir);};button.addEventListener('pointerdown',point);button.addEventListener('pointerenter',e=>{if(e.buttons)point(e);});
+  });
+  let swipeStart=null;canvas.addEventListener('pointerdown',e=>{swipeStart={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);});canvas.addEventListener('pointerup',e=>{if(!swipeStart)return;const dx=e.clientX-swipeStart.x,dy=e.clientY-swipeStart.y;if(Math.max(Math.abs(dx),Math.abs(dy))>12)requestDir(Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up'));swipeStart=null;});
+  $('play').addEventListener('click',startGame);
+  $('sound').addEventListener('click',()=>{soundOn=!soundOn;$('sound').textContent=`♫ SOUND: ${soundOn?'ON':'OFF'}`;if(soundOn)chirp(560);});
+  freshBoard();$('best').textContent=String(best).padStart(6,'0');requestAnimationFrame(frame);
+</script>
+</body>
+</html>
